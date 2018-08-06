@@ -2,22 +2,29 @@
 
 Quickly deploy an endpoint to handle your `contact us` form on your static website.  We don't want to have servers running just to handle our `contact us` form which rarely gets invoked.  Oh, and we also need Captcha because we don't have time in our lives for spam.
 
-You can get your reCAPTCHA secret here:  https://www.google.com/recaptcha/admin#list
+You can get your reCAPTCHA secret here: https://www.google.com/recaptcha/admin#list
 
 ## Package and Deploy
-```aws cloudformation package --template-file stack.yml --output-template-file stack-output.yml --s3-bucket serverless-contact-us-form```
 
-```aws cloudformation deploy --template-file stack-output.yml --stack-name contact-us --capabilities CAPABILITY_IAM  --parameter-overrides "Subject=Contact Us" "ReCaptchaSecret=???" "ToEmailAddress=???"```
+```bash
+aws cloudformation package --template-file stack.yml --output-template-file stack-output.yml --s3-bucket serverless-contact-us-form
+```
+
+```bash
+aws cloudformation deploy --template-file stack-output.yml --stack-name contact-us --capabilities CAPABILITY_IAM  --parameter-overrides "Subject=Contact Us" "ReCaptchaSecret=???" "ToEmailAddress=???"
+```
 
 
 ## What AWS resources does this template use?
+
 * Lambda (API Function)
 * API Gateway (HTTP proxy to Lambda)
 * SNS (Send us the email)
 * IAM (AWS permissions & users)
 
 ## HTML Form
-```
+
+```html
 <form action="<your api gateway url>" method="POST" id="contact-us-form">
     <div class="form-group">
         <label for="nameInputEmail1">Name</label>
@@ -44,8 +51,10 @@ You can get your reCAPTCHA secret here:  https://www.google.com/recaptcha/admin#
       data-callback="onContctUsSubmit" data-badge="inline" >Submit</button>
 </form>
 ```
+
 JQuery example...
-```
+
+```javascript
 $.post($("#contact-us-form").attr('action'), JSON.stringify({
     name: $("#contact-us-form input[name='name']").val(),
     email: $("#contact-us-form input[name='email']").val(),
