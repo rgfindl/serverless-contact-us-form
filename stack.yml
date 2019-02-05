@@ -55,6 +55,9 @@ Resources:
       Timeout: 5
       CodeUri: ./index.js
       Runtime: nodejs6.10
+      Policies:
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt ContactUsSNSTopic.TopicName
       Events:
         PostEvent:
           Type: Api
