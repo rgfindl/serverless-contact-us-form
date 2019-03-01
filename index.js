@@ -39,6 +39,20 @@ exports.handler = function (event, context, callback) {
                     TopicArn: process.env.ContactUsSNSTopic
                 };
                 sns.publish(params, function (err, response) {
+                    if (err) {
+                        console.error("SNS error: ", JSON.stringify(err));
+                        callback(null, {
+                            statusCode: '500',
+                            headers: {
+                                "Access-Control-Allow-Methods" : "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
+                                "Access-Control-Allow-Headers" : "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token",
+                                "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+                                "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+                            },
+                            body: JSON.stringify({message:'Cannot send email'})
+                        });
+                        return;
+                    }
                     callback(null, {
                         statusCode: '200',
                         headers: {
