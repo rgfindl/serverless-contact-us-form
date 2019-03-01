@@ -54,7 +54,7 @@ Resources:
       Handler: index.handler
       Timeout: 5
       CodeUri: ./index.js
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Events:
         PostEvent:
           Type: Api
