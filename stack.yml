@@ -23,6 +23,17 @@ Parameters:
   ReCaptchaSecret:
     Type: String
     Description: Your Google reCAPTCHA secret
+
+Globals:
+  Api:
+    # Enable CORS preflight requests (Add an OPTIONS HTTP method in addition of POST);
+    # to make more specific to your own website, change the origin wildcard
+    # to a particular domain name, e.g. "'www.example.com'"
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+
 Resources:
 
   #
